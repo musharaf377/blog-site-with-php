@@ -17,6 +17,15 @@
                     <div class="col-md-offset-4 col-md-4">
                         <img class="logo" src="../images/news.jpg">
                         <h3 class="heading">Admin</h3>
+                        <?php
+                            if(isset($_POST['login'])){
+                                $username = $_POST['username'];
+                                $password = $_POST['password'];
+
+                                $query = "SELEct"
+                            }
+                        
+                        ?>
                         <!-- Form Start -->
                         <form  action="" method ="POST">
                             <div class="form-group">
