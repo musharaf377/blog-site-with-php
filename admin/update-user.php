@@ -17,13 +17,15 @@
                     
                     $count = mysqli_num_rows($result);
                     $row = mysqli_fetch_assoc($result);
-                    var_dump($row);
+                    // var_dump($row);
                 ?>
                   <!-- Form Start -->
                   <form  action="<?php $_SERVER['PHP_SELF']; ?>" method ="POST" autocomplete="off">
                       <div class="form-group">
                           <label>First Name</label>
                           <input type="text" name="fname" value="<?php echo $row['first_name']; ?>" class="form-control" placeholder="First Name" required>
+
+                          <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
                       </div>
                           <div class="form-group">
                           <label>Last Name</label>
@@ -32,11 +34,6 @@
                       <div class="form-group">
                           <label>User Name</label>
                           <input type="text" name="user" value="<?php echo $row['username']; ?>" class="form-control" placeholder="Username" required>
-                      </div>
-
-                      <div class="form-group">
-                          <label>Password</label>
-                          <input type="password" name="password" value="<?php echo $row['password']; ?>" class="form-control" placeholder="Password" required>
                       </div>
                       <div class="form-group">
                           <label>User Role</label>
@@ -54,18 +51,18 @@
                             $fname = mysqli_real_escape_string($connection, $_POST['fname']);
                             $lname = mysqli_real_escape_string($connection,$_POST['lname']);
                             $user = mysqli_real_escape_string($connection,$_POST['user']);
-                            $password = mysqli_real_escape_string($connection,md5($_POST['password']));
                             $role = mysqli_real_escape_string($connection,$_POST['role']);
 
-                            $update_query = "UPDATE `user` SET `user_id`='$id',`first_name`='$fname',`last_name`='$lname',`username`='$user',`password`='$password',`role`='$role' WHERE `user_id`='$id'";
+                            $update_query = "UPDATE `user` SET `first_name`='$fname',`last_name`='$lname',`username`='$user',`role`='$role' WHERE `user_id`='$id'";
 
-                            $update_result = mysqli_query($connection, $query);
+                            $update_result = mysqli_query($connection, $update_query);
 
-                            var_dump($update_query);
-
+                            if($update_result){
+                                header("location:users.php");
+                            }else{
+                                echo "update failed.";
+                            }
                         }
-                   
-                   
                    ?>
                </div>
            </div>
