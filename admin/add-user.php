@@ -1,6 +1,12 @@
 <?php 
     include "header.php";
     include "config.php";
+
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        header("Location: post.php");
+        exit();
+    }
+
 ?>
   <div id="admin-content">
       <div class="container">
@@ -40,14 +46,8 @@
                     }else{
                         echo 'data does not insert.';
                     }
-                    
-
                    }
-
-
                 }
-              
-
               ?>
                   <!-- Form Start -->
                   <form  action="<?php $_SERVER['PHP_SELF']; ?>" method ="POST" autocomplete="off">

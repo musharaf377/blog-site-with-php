@@ -7,8 +7,6 @@
         session_destroy();
         die();
     }
-
-    
 ?>
 
 
@@ -58,7 +56,8 @@
 								<li>
 									<a href="post.php">Post</a>
 								</li>
-
+                            <?php 
+                                if($_SESSION['role'] == "admin"){ ?>
 								<li>
 									<a href="category.php">Category</a>
 								</li>
@@ -66,8 +65,9 @@
 									<a href="users.php">Users</a>
 								</li>
 
+                            <?php } ?>
 							</ul>
-						<center>
+                        </center>
                     </div>
                 </div>
             </div>
