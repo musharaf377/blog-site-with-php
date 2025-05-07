@@ -2,7 +2,8 @@
     include "header.php";
     include "config.php";
 
-    if (!isset($_SESSION['role'] !== 'admin')) {
+    session_start();
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         header("Location: post.php");
         exit();
     }

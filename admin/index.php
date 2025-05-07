@@ -32,12 +32,14 @@
                                 $username = mysqli_real_escape_string($connection, $_POST['username']);
                                 $password = md5($_POST['password']);
 
-                                $query = "SELECT `user_id`, `username`, `role` FROM `user` WHERE `username`='$username' AND `password`= '$password'";
+                                $query = "SELECT `user_id`,`first_name`, `last_name`, `username`, `role` FROM `user` WHERE `username`='$username' AND `password`= '$password'";
 
                                 $query_result = mysqli_query($connection, $query);
                                 if(mysqli_num_rows($query_result) > 0 ){
                                     while($row = mysqli_fetch_assoc($query_result)){
 
+                                        $_SESSION['first_name'] = $row['first_name'];
+                                        $_SESSION['last_name'] = $row['last_name'];
                                         $_SESSION['username'] = $row['username'];
                                         $_SESSION['role'] = $row['role'];
                                         $_SESSION['user_id'] = $row['user_id'];

@@ -38,7 +38,8 @@
                     </div>
                     <!-- /LOGO -->
                       <!-- LOGO-Out -->
-                    <div class="col-md-offset-9  col-md-3">
+                    <div class="col-md-offset-9 flex  col-md-3">
+                        <?php echo $_SESSION['first_name'] .' '. $_SESSION['last_name']; ?>
                         <a href="logout.php" class="admin-logout" > logout</a>
                     </div>
                     <!-- /LOGO-Out -->
