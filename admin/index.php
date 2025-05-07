@@ -1,3 +1,12 @@
+
+<?php 
+    include "config.php";
+
+    session_start();
+    if(isset($_SESSION['username'])){
+        header("location:users.php");
+    }
+?>
 <!doctype html>
 <html>
    <head>
@@ -19,12 +28,28 @@
                         <h3 class="heading">Admin</h3>
                         <?php
                             if(isset($_POST['login'])){
-                                $username = $_POST['username'];
-                                $password = $_POST['password'];
 
-                                $query = "SELEct"
+                                $username = mysqli_real_escape_string($connection, $_POST['username']);
+                                $password = md5($_POST['password']);
+
+                                $query = "SELECT `user_id`, `username`, `role` FROM `user` WHERE `username`='$username' AND `password`= '$password'";
+
+                                $query_result = mysqli_query($connection, $query);
+                                if(mysqli_num_rows($query_result) > 0 ){
+                                    while($row = mysqli_fetch_assoc($query_result)){
+
+                                        $_SESSION['username'] = $row['username'];
+                                        $_SESSION['role'] = $row['role'];
+                                        $_SESSION['user_id'] = $row['user_id'];
+                                        $_SESSION['role'] = $row['role'];
+
+                                        header("location:users.php");
+                                    }
+                                }else{
+                                    echo "You are not this user.";
+                                }
+                                
                             }
-                        
                         ?>
                         <!-- Form Start -->
                         <form  action="" method ="POST">
