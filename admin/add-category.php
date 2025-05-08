@@ -24,7 +24,7 @@
                     $query = "INSERT INTO `category`(`category_name`) VALUES ('{$category_name}')";
                         $result = mysqli_query($connection, $query);
 
-                        
+                        header('location:category.php');
                     }
 
                 }

@@ -3,12 +3,12 @@ include "config.php";
 
 $id = $_REQUEST['id'];
 
- $query = "DELETE FROM `user` WHERE `user_id` = '$id'";
+ $query = "DELETE FROM `category` WHERE `category_id` = '$id'";
 
  $result = mysqli_query($connection, $query);
 
  if($result){
-    header("location:users.php");
+    header("location:category.php");
  }else{
     echo "Delete Faild";
  }
