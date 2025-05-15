@@ -44,38 +44,61 @@
                   </form>
                   <!--/Form -->
 
-                  <?php
+                <?php
 
-                  if(isset($_POST['submit'])){
-                    $title = mysqli_real_escape_string($connection, $_POST['post_title']);
-                    $postdesc = mysqli_real_escape_string($connection, $_POST['postdesc']);
-                    $category = $_POST['category'];
-                    $date = date("d M, Y");
-                    $author = $_SESSION['user_id'];
-                    $image = $_FILES['fileToUpload'];
+                    if(isset($_POST['submit'])){
+                        $title = mysqli_real_escape_string($connection, $_POST['post_title']);
+                        $postdesc = mysqli_real_escape_string($connection, $_POST['postdesc']);
+                        $category = $_POST['category'];
+                        $date = date("d M, Y");
+                        $author = $_SESSION['user_id'];
+                        $image = $_FILES['fileToUpload'];
 
-                    //image
-                    $file_error =[];
+                        //image
+                        $file_error =[];
 
-                    $file_name = $image['name'];
-                    $file_size = $image['size'];
-                    $file_tmp = $image['tmp_name'];
-                    $file_type = $image['type'];
-                    $file_ext = end(explode('.', $file_name));
+                        $file_name = $image['name'];
+                        $file_size = $image['size'];
+                        $file_tmp = $image['tmp_name'];
+                        $file_type = $image['type'];
+                        $file_ext_separated = explode('.', $file_name);
+                        $file_ext = end($file_ext_separated);
 
-                    $image_extention = ['jpeg','svg', 'png', 'jpg'];
+                        print_r($file_ext);
 
-                    if(in_array($file_ext, $image_extention) == false){
-                        $file_error[] = "This extension file not allow.";
+                        
+
+                        $image_extention = ['jpeg','svg', 'png', 'jpg'];
+
+                        if(in_array($file_ext, $image_extention) == false){
+                            $file_error[] = "This extension file not allow.";
+                        }
+
+                        if($file_size > 2097152 ){
+                            $file_error[] = "Please select your image upto 2 MB size.";
+                        }
+                        
+                        $image_new_name = time().'-'. basename($file_name);
+                        // print_r($image_new_name);
+                        $target = "upload/". $image_new_name ;
+
+                        if(empty($file_error)){
+                            move_uploaded_file($file_tmp, $target);
+                        }else{
+                            // print_r($file_error);
+                        }
+
+                        $query = "INSERT INTO `post`(`title`, `description`, `category`, `post_date`, `author`, `post_image`) VALUES ('$title','$postdesc','$category','$date','$author','$image_new_name')" ;
+
+                        $result = mysqli_query($connection, $query);
+
+                        if($result){
+                            header("location:post.php");
+                        }else{
+                            echo "Post insert faild";
+                        }
+
                     }
-
-                    if($file_size > )
-                    print_r($file_ext);
-
-
-
-                    var_dump($image);
-                  }
                   
                   ?>
 
