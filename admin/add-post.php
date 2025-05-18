@@ -88,20 +88,19 @@
                             // print_r($file_error);
                         }
 
-                        $query = "INSERT INTO `post`(`title`, `description`, `category`, `post_date`, `author`, `post_image`) VALUES ('$title','$postdesc','$category','$date','$author','$image_new_name')" ;
+                        $query = "INSERT INTO `post`(`title`, `description`, `category`, `post_date`, `author`, `post_image`) VALUES ('$title','$postdesc','$category','$date','$author','$image_new_name');";
 
-                        $result = mysqli_query($connection, $query);
+                        $query .= "UPDATE `category` SET `post` = post + 1 WHERE `category_id` = '$category'";
+
+                        $result = mysqli_multi_query($connection, $query);
 
                         if($result){
                             header("location:post.php");
                         }else{
                             echo "Post insert faild";
                         }
-
                     }
-                  
                   ?>
-
               </div>
           </div>
       </div>
